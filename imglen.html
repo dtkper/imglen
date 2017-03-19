@@ -11,15 +11,19 @@
 			$("#img_03").imglen({ imageSrc: "sample01.jpg" });
 			$("#img_04").imglen({ borderSize: 8, borderColor: "#06f" });
 			
-			
+	
 			$("p.create").on("mousemove", "img", function() {$(this).imglen({borderColor: "green"});})
 			
-			$("img").imglen({borderColor: "red" });
+			$("img.all").imglen({borderColor: "red" });
+			
+			//$("img.imglen").imglen({borderColor: "red", lensSize: 233 });  //also can init it with option
+			
 		});	
 		function createImg(e) {
 		
 			if(!$("p.create img")[0]) {
 				$("p.create").append('<img id="img_05" src="sample01.jpg" width="384" height="240" />');
+				$("p.create img").imglen({borderColor: "green"});
 				$("p.create").parent().find("button").remove();
 			}
 				
@@ -43,12 +47,15 @@
 	<p>
 		imglen
 	</p>
+	
 	<hr />
 	<table>
 		<tr>
 			<td>
-				<p><i>Note - If you are using IE 8 or lower than you will see a square lens</i></p>
-				<h3>Demo 1 - Default lens</h3>
+		<p>
+		you can use it same as ImageLens. if this img element initialized, even though used the selector incloud this, it will be skip.  
+		</p>
+			<h3>Demo 1 - Default lens</h3>
 				<p>
 					<img id="img_01" src="sample01.jpg" width="384" height="240" />
 				</p>
@@ -77,11 +84,7 @@
 				</p>
 				<pre>$("#img_04").imglen({ borderSize: 8, borderColor: "#06f" });</pre>
 			</td>
-			
-			
-    <td valign="top" style="text-align: right;">
-	&nbsp;
-    </td>
+
 		</tr>
 		<tr>
 			<td>
@@ -94,19 +97,43 @@
 			<td>
 			
 				<p>&nbsp;</p>
-				<h3>Demo 6 - all use option </h3>
+				<h3>Demo 6 - class.all use option </h3>
 				<p>
-					<img id="img_06" src="sample01.jpg" width="384" height="240" />
+					<img id="img_06" class="all" src="sample01.jpg" width="384" height="240" />
 				</p>
-				<pre>		$("img").imglen({borderColor: "red" });</pre>
+				<pre>		$("img.all").imglen({borderColor: "red" });</pre>
+			</td>
+		
+		</tr>
+		
+			<tr>
+			<td>
+			
+				<p>&nbsp;</p>
+				<h3>Demo 7 - class.all use option </h3>
+				<p>
+					<img  class="all" src="sample01.jpg" width="384" height="240" />
+				</p>
+				<pre>		$("img.all").imglen({borderColor: "red" });</pre>
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+				<h3>Demo 8- add class imglen </h3>
+				<p>
+					<img class="imglen" src="sample01.jpg" width="384" height="240" />
+				</p>
+				<p>
+				when your img element add class imglen,<br/> 
+				when mousemove this will become a imglen and has<br/>  the default style.	<br/> 
+				if you init it before mousemove, it will apply your option.	<br/> 
+				</p>
 			</td>
 		
 		</tr>
 	</table>
 
-	<p>
-		you can use it same as ImageLens.
-	</p>
+
 	
 </body>
 </html>

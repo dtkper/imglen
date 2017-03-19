@@ -33,6 +33,8 @@
             var $target = $this.data("$target");
             if($target != null) {
                 setPosition(e, $this, $target);
+            } else {
+                $this.imglen();
             }
         });
     });
