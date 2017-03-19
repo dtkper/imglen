@@ -1,6 +1,44 @@
 (function($){
-  
-    $.fn.imglen = function(options) {  
+
+    function setPosition(e, $this, $target) {
+
+        $(".imglen.target").hide();   //hide all
+
+        var widthRatio = $this.data("width-ration");
+        var heightRatio = $this.data("height-ration");
+
+        var offset = $this.offset();
+
+        var leftPos = parseInt(e.pageX - offset.left);
+        var topPos = parseInt(e.pageY - offset.top);
+
+        if (leftPos < 0 || topPos < 0 || leftPos > $this.width() || topPos > $this.height()) {
+            $target.hide();
+        }
+        else {
+            $target.show();
+            leftPos = String(((e.pageX - offset.left) * widthRatio - $target.width() / 2) * (-1));
+            topPos = String(((e.pageY - offset.top) * heightRatio - $target.height() / 2) * (-1));
+            $target.css({ backgroundPosition: leftPos + 'px ' + topPos + 'px' });
+
+            leftPos = String(e.pageX - $target.width() / 2);
+            topPos = String(e.pageY - $target.height() / 2);
+            $target.css({ left: leftPos + 'px', top: topPos + 'px' });
+        }
+    }
+
+    $(document).ready(function () {
+        $(document).on("mouseover.imglen mousemove.imglen mouseout.imglen mouseleave.imglen", "img.imglen", function(e) {
+            var $this = $(this);
+            var $target = $this.data("$target");
+            if($target != null) {
+                setPosition(e, $this, $target);
+            }
+        });
+    });
+
+
+    $.fn.imglen = function(options) {
         var defaults = {
             lensSize: 100,
             borderSize: 4,
@@ -39,86 +77,51 @@
             $targets.appendTo($element);
         }
 
-        var $imgs = $(".imglen.imgs");
-        if(!$imgs[0]) {
-            $imgs = $("<div></div>").attr("class", "imglen imgs");
-            $imgs.appendTo($element);
-        }
-		
-
         return this.each(function () {
             var obj = $(this);
-			
-			if(obj.is("img")) {
-				if(obj.data("$img") == null) {  //use data to save and judge
 
-					var $img = $("<img />").attr("class", "imglen img").css("display", "none");
-					$img.appendTo($imgs);
-					var imageSrc = options.imageSrc ? options.imageSrc : obj.attr("src");
-					$img.attr("src", imageSrc);
-					obj.data("$img", $img);
-					obj.addClass("imglen");
-				} else {
-					return;
-				}
+            if(obj.is("img")) {
+                var $img;
+                if(obj.data("$img") == null) {  //use data to save and judge
 
-				if(obj.data("$target") == null) {
-					var $target = $("<div></div>").attr("class", "imglen target");
+                    $img = $("<img />").attr("class", "imglen img").css("display", "none");
+                    $img.appendTo($element);
+                    var imageSrc = options.imageSrc ? options.imageSrc : obj.attr("src");
+                    $img.attr("src", imageSrc);
+                    obj.data("$img", $img);
+                    obj.addClass("imglen");
+                } else {
+                    return;
+                }
 
-					$target.attr("style", lensStyle);
-					$target.css({ "z-index": 1314 });
-					$target.css({ backgroundImage: "url('" + obj.data("$img").attr("src") + "')" });
-					$targets.append($target);
-					obj.data("$target", $target);
-				}
+                if(obj.data("$target") == null) {
+                    var $target = $("<div></div>").attr("class", "imglen target");
 
-				if(obj.data("width-ration") == null || obj.data("height-ration") == null) {
-					obj.data("$img").load(function () {
-						var widthRatio = $(this).width() / obj.width() || 0;
-						var heightRatio = $(this).height() / obj.height() || 0;
+                    $target.attr("style", lensStyle);
+                    $target.css({ "z-index": 1314 });
+                    $target.css({ backgroundImage: "url('" + obj.data("$img").attr("src") + "')" });
+                    $targets.append($target);
+                    obj.data("$target", $target);
+                }
 
-						obj.data("width-ration", widthRatio);
-						obj.data("height-ration", heightRatio);
-					});
-				}
+                if(obj.data("width-ration") == null || obj.data("height-ration") == null) {
+                    $img.load(function () {
+                        var widthRatio = $(this).width() / obj.width() || 0;
+                        var heightRatio = $(this).height() / obj.height() || 0;
 
+                        obj.data("width-ration", widthRatio);
+                        obj.data("height-ration", heightRatio);
+                        $img.remove();
+                    });
+                }
 
-				obj.on("mouseover mousemove mouseout mouseleave", setPosition);
-				obj.data("$target").on("mouseover mousemove mouseout mouseleave", setPosition);
-		
+                obj.data("$target").on("mouseover.imglen mousemove.imglen mouseout.imglen mouseleave.imglen", setTargetPosition);
 
-				function setPosition(e) {
-					
-					$(".imglen.target").hide();   //hide all
+                function setTargetPosition(e) {
+                    setPosition(e, obj, obj.data("$target"));
+                }
+            }
 
-					var widthRatio = obj.data("width-ration");
-					var heightRatio = obj.data("height-ration");
-
-					var $target = obj.data("$target");
-					var offset = obj.offset();
-
-					var leftPos = parseInt(e.pageX - offset.left);
-					var topPos = parseInt(e.pageY - offset.top);
-
-					if (leftPos < 0 || topPos < 0 || leftPos > obj.width() || topPos > obj.height()) {
-						$target.hide();
-					}
-					else {
-						$target.show();
-						leftPos = String(((e.pageX - offset.left) * widthRatio - $target.width() / 2) * (-1));
-						topPos = String(((e.pageY - offset.top) * heightRatio - $target.height() / 2) * (-1));
-						$target.css({ backgroundPosition: leftPos + 'px ' + topPos + 'px' });
-
-						leftPos = String(e.pageX - $target.width() / 2);
-						topPos = String(e.pageY - $target.height() / 2);
-						$target.css({ left: leftPos + 'px', top: topPos + 'px' });
-					}
-				}
-			}
-
-           
         });
     }
-
-   
 })(jQuery);
