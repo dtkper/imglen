@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>jQuery Topbar message Plugin Demo</title>
+	<script src="jquery.js" type="text/javascript"></script>
+	<script src="jquery.imageLens.js" type="text/javascript"></script>
+	<script type="text/javascript" language="javascript">
+		$(function () {
+			$("#img_01").imageLens();
+			$("#img_02").imageLens({ lensSize: 200 });
+			$("#img_03").imageLens({ imageSrc: "sample01.jpg" });
+			$("#img_04").imageLens({ borderSize: 8, borderColor: "#06f" });
+			
+			
+			$("p.create").on("mousemove", "img", function() {$(this).imageLens({borderColor: "green"});})
+			
+			$("img").imageLens({borderColor: "red" });
+		});	
+		function createImg(e) {
+		
+			if(!$("p.create img")[0]) {
+				$("p.create").append('<img id="img_05" src="sample01.jpg" width="384" height="240" />');
+				$("p.create").parent().find("button").remove();
+			}
+		}
+		
+	</script>
+
+	<style type="text/css">
+		body { margin: 0px; font-family: "Trebuchet MS", Arial, Sans-Serif; font-size: 14px; }
+		a { color: #0066CC; text-decoration: none; }
+		a:hover { color: #CC0000; text-decoration: underline; }
+		p.create {width: 463px; height: 240px}
+	</style>
+</head>
+<body style="margin-left: 25px;">
+
+<!-- End BuySellAds.com Ad Code -->
+
+	<h1>
+		<a href="http://www.dailycoding.com/">Dailycoding.com</a>
+	</h1>
+	<p>
+		<a href="../imageLens.zip">Download source</a> | <a href="http://www.dailycoding.com/Posts/imagelens__a_jquery_plugin_for_lens_effect_image_zooming.aspx">
+			Back to article</a>
+	</p>
+	<hr />
+	<table>
+		<tr>
+			<td>
+				<p><i>Note - If you are using IE 8 or lower than you will see a square lens</i></p>
+				<h3>Demo 1 - Default lens</h3>
+				<p>
+					<img id="img_01" src="sample01.jpg" width="384" height="240" />
+				</p>
+				<pre>$("#img_01").imageLens();</pre>
+				
+				<p>&nbsp;</p>
+				<h3>Demo 2 - Custom lens size</h3>
+				<p>
+					<img id="img_02" src="sample01.jpg" width="384" height="240" />
+				</p>
+				<pre>$("#img_02").imageLens({ lensSize: 200 });</pre>
+				
+			</td>
+			<td>
+				<p>&nbsp;</p>
+				<h3>Demo 3 - Custom image source</h3>
+				<p>
+					<img id="img_03" src="sample01_s.jpg" width="384" height="240" />
+				</p>
+				<pre>$("#img_03").imageLens({ imageSrc: "sample01.jpg" });</pre>
+				
+				<p>&nbsp;</p>
+				<h3>Demo 4 - Other lens properties</h3>
+				<p>
+					<img id="img_04" src="sample01.jpg" width="384" height="240" />
+				</p>
+				<pre>$("#img_04").imageLens({ borderSize: 8, borderColor: "#06f" });</pre>
+			</td>
+			
+			
+    <td valign="top" style="text-align: right;">
+	&nbsp;
+    </td>
+		</tr>
+		<tr>
+			<td>
+				<p>&nbsp;</p>
+				<h3>Demo 5 - Create image source <button type="button" onclick = "createImg()">create img </button> </h3>
+				<p class="create">
+				</p>
+				<pre>$("p.create").on("mousemove", "img", function() {$(this).imageLens({borderColor: "green"});});</pre>
+			</td>
+			<td>
+			
+				<p>&nbsp;</p>
+				<h3>Demo 6 - all use option </h3>
+				<p>
+					<img id="img_06" src="sample01.jpg" width="384" height="240" />
+				</p>
+				<pre>		$("img").imageLens({borderColor: "red" });</pre>
+			</td>
+		
+		</tr>
+	</table>
+
+	<p>
+		Image courtesy <a href="http://www.smashingmagazine.com/">http://www.smashingmagazine.com/</a>
+	</p>
+	
+	<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));	</script>	<script type="text/javascript">	try{var pageTracker = _gat._getTracker("UA-2030729-5");pageTracker._initData();pageTracker._trackPageview();}catch(ex){}</script>
+	
+</body>
+</html>
